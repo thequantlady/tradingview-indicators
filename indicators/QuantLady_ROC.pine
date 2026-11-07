@@ -1,0 +1,28 @@
+// MIT License · © The Quant Lady
+// Education only. Not investment advice. No buy/sell recommendations.
+//
+// Rate of Change (ROC %) study used in Episode 2 of The Quant Lady channel.
+// ROC % = (close ÷ close N periods ago − 1) × 100, measured on MONTHLY closes by default (N = 18).
+// The two reference lines (+40% and 0%) are the levels discussed in the episode.
+// The latest value keeps changing until the month closes; the episode uses month-end values.
+
+//@version=6
+indicator("The Quant Lady · ROC % (Ep 2 study)", shorttitle = "QL ROC %", overlay = false, format = format.percent, precision = 1)
+
+// ---------- Inputs ----------
+rocLen  = input.int(18, "ROC length (periods)", minval = 1)
+rocTf   = input.timeframe("1M", "Measure on timeframe", tooltip = "1M = monthly closes, as in Episode 2. Leave empty to use the chart's own timeframe.")
+upperLv = input.float(40.0, "Upper reference line (%)")
+lowerLv = input.float(0.0, "Lower reference line (%)")
+shade   = input.bool(true, "Shade the zones above the upper line and below the lower line")
+
+// ---------- Logic ----------
+// An empty timeframe makes request.security use the chart's own timeframe.
+rocVal = request.security(syminfo.tickerid, rocTf, ta.roc(close, rocLen), lookahead = barmerge.lookahead_off)
+
+// ---------- Plots ----------
+hline(upperLv, "Upper reference", color = color.new(#f6c453, 0), linestyle = hline.style_dashed, linewidth = 2)
+hline(lowerLv, "Lower reference", color = color.new(color.white, 40), linestyle = hline.style_solid)
+plot(rocVal, "ROC %", color = color.new(#ffffff, 0), linewidth = 2)
+bgcolor(shade and rocVal >= upperLv ? color.new(#ff4f6d, 85) : na, title = "Above upper line")
+bgcolor(shade and rocVal <= lowerLv ? color.new(#26d68c, 85) : na, title = "Below lower line")

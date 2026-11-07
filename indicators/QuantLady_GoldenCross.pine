@@ -1,0 +1,64 @@
+// MIT License · © The Quant Lady
+// Education only. Not investment advice. No buy/sell recommendations.
+//
+// Golden Cross with the exact rules tested on The Quant Lady channel:
+//   Episode 1 (daily):  50/200 SMA cross + volume, 52-week-high, liquidity and price filters
+//   Episode 3 (weekly): 10/40-week SMA cross with the same filters on weekly bars
+// The Episode 2 ROC study is a separate script: QuantLady_ROC.pine
+
+//@version=6
+indicator("The Quant Lady · Golden Cross (Ep 1 / Ep 3 rules)", shorttitle = "QL Golden Cross", overlay = true)
+
+// ---------- Inputs ----------
+preset      = input.string("Daily · Ep 1", "Preset", options = ["Daily · Ep 1", "Weekly · Ep 3", "Custom"],
+     tooltip = "Daily · Ep 1 = 50/200 on a DAILY chart. Weekly · Ep 3 = 10/40 on a WEEKLY chart. Custom = use the values below.")
+useFilters  = input.bool(true, "Apply channel filters", tooltip = "Volume, near 52-week high, liquidity and minimum price")
+fastIn      = input.int(50, "Custom · fast SMA length", minval = 1, group = "Custom values")
+slowIn      = input.int(200, "Custom · slow SMA length", minval = 2, group = "Custom values")
+volLenIn    = input.int(20, "Custom · volume average length (bars)", minval = 1, group = "Custom values")
+hiLenIn     = input.int(250, "Custom · high lookback (bars)", minval = 1, group = "Custom values")
+liqLenIn    = input.int(50, "Custom · median turnover/price length (bars)", minval = 1, group = "Custom values")
+minTurnIn   = input.float(50, "Custom · min median turnover per bar (₹ lakh)", minval = 0, group = "Custom values")
+volMult     = input.float(1.2, "Volume must be above × average", minval = 0, group = "Filters")
+nearHiPct   = input.float(30, "Close within % of the high", minval = 0, maxval = 100, group = "Filters")
+minPrice    = input.float(20, "Min median price (₹)", minval = 0, group = "Filters")
+showFiltered = input.bool(true, "Show crosses that failed the filters (grey dots)", group = "Display")
+
+isDaily  = preset == "Daily · Ep 1"
+isWeekly = preset == "Weekly · Ep 3"
+fastLen  = isDaily ? 50  : isWeekly ? 10  : fastIn
+slowLen  = isDaily ? 200 : isWeekly ? 40  : slowIn
+volLen   = isDaily ? 20  : isWeekly ? 4   : volLenIn
+hiLen    = isDaily ? 250 : isWeekly ? 52  : hiLenIn
+liqLen   = isDaily ? 50  : isWeekly ? 10  : liqLenIn
+minTurn  = isDaily ? 50.0 : isWeekly ? 250.0 : minTurnIn   // weekly turnover ≈ 5 × daily
+
+// ---------- Logic ----------
+fast = ta.sma(close, fastLen)
+slow = ta.sma(close, slowLen)
+goldenCross = ta.crossover(fast, slow)
+deathCross  = ta.crossunder(fast, slow)
+
+volOK   = volume > volMult * ta.sma(volume, volLen)
+nearHi  = close >= (1 - nearHiPct / 100) * ta.highest(high, hiLen)
+liqOK   = ta.median(close * volume, liqLen) >= minTurn * 1e5
+priceOK = ta.median(close, liqLen) >= minPrice
+passes  = not useFilters or (volOK and nearHi and liqOK and priceOK)
+
+buySignal = goldenCross and passes
+
+// ---------- Plots ----------
+plot(fast, "Fast SMA", color = color.new(#f6c453, 0), linewidth = 2)
+plot(slow, "Slow SMA", color = color.new(#6aa8ff, 0), linewidth = 2)
+plotshape(buySignal, "Golden cross (passes filters)", shape.triangleup, location.belowbar, color.new(#26d68c, 0), size = size.small, text = "GC", textcolor = color.new(#26d68c, 0))
+plotshape(showFiltered and goldenCross and not passes, "Golden cross (filtered out)", shape.circle, location.belowbar, color.new(color.gray, 20), size = size.tiny)
+plotshape(deathCross, "Death cross (exit)", shape.triangledown, location.abovebar, color.new(#ff4f6d, 0), size = size.small, text = "DC", textcolor = color.new(#ff4f6d, 0))
+
+// Gentle reminder when the preset does not match the chart timeframe
+var label warn = na
+if barstate.islast
+    wrongTf = (isDaily and not timeframe.isdaily) or (isWeekly and not timeframe.isweekly)
+    label.delete(warn)
+    if wrongTf
+        warn := label.new(bar_index, high, isDaily ? "Preset is Daily · switch chart to 1D" : "Preset is Weekly · switch chart to 1W",
+             style = label.style_label_down, color = color.new(#0a1430, 0), textcolor = color.new(#f6c453, 0), size = size.small)
