@@ -34,7 +34,7 @@ New to Pine Script? [docs/how-the-code-works.md](docs/how-the-code-works.md) exp
 - Ep 2 · One Rule vs the −54% Crash
 - Ep 3 · Weekly Chart: One Tweak, and the Truth About Optimisation
 
-Watch on YouTube: [The Quant Lady](YOUR-YOUTUBE-CHANNEL-LINK)
+Watch on YouTube: [The Quant Lady](https://www.youtube.com/@theQuantLady)
 
 ## License
 
