@@ -40,7 +40,7 @@ Full data behind the videos, so you can check every number yourself.
 - Ep 1 · I Tested Every Golden Cross in India: 13 Years, 6,514 Signals
 - Ep 2 · One Rule vs the −54% Crash
 - Ep 3 · Weekly Chart: One Tweak, and the Truth About Optimisation
-- Ep 4 · 30 Months. Zero Trades. Would You Have Stayed?
+- Ep 4 · The Start-Date Effect: Meera, Kabir and Arjun · [watch](https://youtu.be/-Tpy0JqRhfo)
 
 Watch on YouTube: [The Quant Lady](https://www.youtube.com/@theQuantLady)
 

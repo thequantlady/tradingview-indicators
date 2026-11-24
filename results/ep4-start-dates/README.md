@@ -43,5 +43,5 @@ Start every month from January 2013 to December 2020 and hold exactly 5 years (t
 
 ## Episode links
 
-- Watch Episode 4: [YouTube channel](https://www.youtube.com/@theQuantLady)
+- Watch Episode 4 on YouTube: https://youtu.be/-Tpy0JqRhfo
 - Trade-by-trade detail for the January 2013 start: [Episode 3 results](../ep3-weekly-golden-cross/README.md)
