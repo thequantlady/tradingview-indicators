@@ -8,8 +8,8 @@ Free TradingView indicators that draw the exact rules tested on **The Quant Lady
 
 | File | What it shows | Used in |
 |---|---|---|
-| [`QuantLady_GoldenCross.pine`](indicators/QuantLady_GoldenCross.pine) | Golden cross (green **GC**) and death cross (red **DC**) with the channel's filters. Presets: Daily 50/200 and Weekly 10/40 | Episodes 1, 2, 3 |
-| [`QuantLady_ROC.pine`](indicators/QuantLady_ROC.pine) | Rate of Change % on monthly closes (18 months by default) with +40% and 0% reference lines | Episode 2 |
+| [`QuantLady_GoldenCross.pine`](indicators/QuantLady_GoldenCross.pine) | Golden cross (green **GC**) and death cross (red **DC**) with the channel's filters. Presets: Daily 50/200 and Weekly 10/40 | Episodes 1, 2, 3, 4 |
+| [`QuantLady_ROC.pine`](indicators/QuantLady_ROC.pine) | Rate of Change % on monthly closes (18 months by default) with +40% and 0% reference lines | Episodes 2, 4 |
 
 ## Add one to TradingView in 2 minutes (free plan works)
 
@@ -28,11 +28,19 @@ The free plan allows 2 indicators per chart, so you can use both indicators toge
 
 New to Pine Script? [docs/how-the-code-works.md](docs/how-the-code-works.md) explains every part in plain words.
 
+## Backtest results
+
+Full data behind the videos, so you can check every number yourself.
+
+- [Episode 3 · Weekly Golden Cross: all 72 trades, yearly returns, monthly equity and the settings grid](results/ep3-weekly-golden-cross/README.md)
+- [Episode 4 · Start dates: 121 start months and 96 five-year windows](results/ep4-start-dates/README.md)
+
 ## Episodes
 
 - Ep 1 · I Tested Every Golden Cross in India: 13 Years, 6,514 Signals
 - Ep 2 · One Rule vs the −54% Crash
 - Ep 3 · Weekly Chart: One Tweak, and the Truth About Optimisation
+- Ep 4 · 30 Months. Zero Trades. Would You Have Stayed?
 
 Watch on YouTube: [The Quant Lady](https://www.youtube.com/@theQuantLady)
 
