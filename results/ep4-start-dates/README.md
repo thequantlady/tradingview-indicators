@@ -33,11 +33,14 @@ Start every month from January 2013 to December 2020 and hold exactly 5 years (t
 |---|---|
 | [`start_dates_121.csv`](start_dates_121.csv) | One row per start month: final value after costs and after tax (₹ lakh), CAGR, Nifty 50 price CAGR over the same dates, max drawdown, number of trades, first entry date, win rate, share of profit from the top 3 trades |
 | [`windows_5y_96.csv`](windows_5y_96.csv) | One row per 5-year window: start and end month, value after costs and after tax, Nifty 50 price value, max drawdown, % of days in cash |
+| [`trades_meera_kabir_arjun.csv`](trades_meera_kabir_arjun.csv) | Every trade of the three investors in the video: Arjun (start Sep 2017, 28 trades), Meera (May 2020, 27 trades) and Kabir (Jul 2020, 25 trades). Stock, signal week, entry and exit dates and prices, amount invested, profit or loss, return, exit reason, tax type |
 
 ## Notes
 
 - Nifty comparison uses the **price index** (no dividends). Dividends add roughly 1–1.5% a year; the smallest gap between the strategy and the Nifty was still about 5 percentage points a year.
 - The cycle filter sent the strategy to cash only 4 times in 13 years. Four events cannot validate a rule.
+- Trade profits do not add up to the final value on their own: idle cash also earns 6% a year (for Arjun, who sat in cash for 30 months, that interest is a large part of the gap).
+- **Known data issue (same as Episode 3):** AKZOINDIA and JSWDULUX are the same company under its old and new NSE symbols, and the price data listed both. In the 37 start dates that held it in Feb 2016, one small losing trade (about −5.7%) was counted twice. None of the three investors above is affected.
 - Data: Yahoo Finance daily prices for NSE stocks, cleaned as described in Episode 1. Survivorship bias is not fully removed.
 - Backtested, hypothetical results. Past performance does not predict future returns. Education only — see [DISCLAIMER](../../DISCLAIMER.md).
 
