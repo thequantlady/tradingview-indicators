@@ -28,8 +28,6 @@ The free plan allows 2 indicators per chart, so you can use both indicators toge
 
 New to Pine Script? [docs/how-the-code-works.md](docs/how-the-code-works.md) explains every part in plain words.
 
-How is RSI calculated? [docs/how-rsi-is-calculated.md](docs/how-rsi-is-calculated.md) walks through the exact formula with a worked example you can check.
-
 ## Backtest results
 
 Full data behind the videos, so you can check every number yourself.
